@@ -1,5 +1,9 @@
 package com.ivantsov.junit.lesson3;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -59,5 +63,40 @@ public class AssertionTest {
         Object dog = new Object();
         // Переменные cat и dog на ссылаются на различные объекты
         assertNotSame(cat, dog);
+    }
+    
+    @Test
+    public void test_whenAssertionSomeObject_thenNotDifferent() {
+        String actual = "Test";
+        String expectes = actual;
+        // Переменные actual и expected ссылаются на один объект
+        assertSame(expectes, actual);
+    }
+    
+    @Test
+    public void test_whenAssertionCondition_thenVerify() {
+        assertFalse("5 is greater then 4", 5 < 4);
+        assertTrue("5 is not greater then 6", 5 < 6);
+    }
+    
+    @Test
+    public void test_whenCheckingExceptionMessage_thenEqual() {
+        try {
+            methodThatShouldThrowExeption();
+            fail("Exeption not throw");
+        } catch (UnsupportedOperationException e) {
+            String exepted = "Operation is not supported";
+            assertEquals(exepted, e.getMessage());
+        }
+    }
+
+    private void methodThatShouldThrowExeption() {
+        throw new UnsupportedOperationException("Operation is not supported");
+    }
+    
+    @Test
+    public void test_assertThatHasItems() {
+        List<String> list = Arrays.asList("Java", "Kotlin", "Scala");
+        assertThat(list, CoreMatchers.hasItems("Java", "Scala"));
     }
 }
